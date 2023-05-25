@@ -22,10 +22,14 @@ namespace WpfKeyboardSimulatorApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
     public enum Level
     {
-        Beginner, Elementary, PreIntermediate, Intermediate, Advanced, Fluent
+        Beginner,
+        Elementary,
+        PreIntermediate,
+        Intermediate,
+        Advanced,
+        Fluent
     }
 
     public partial class MainWindow : Window
@@ -47,9 +51,6 @@ namespace WpfKeyboardSimulatorApp
         public DispatcherTimer Timer { get; set; }
         public DispatcherTimer TimerButton { get; set; }
 
-        private ILetterSymbol symbol;
-
-        private IDictionaryRepository repository;
         public MainWindow()
         {
             InitializeComponent();
@@ -78,24 +79,36 @@ namespace WpfKeyboardSimulatorApp
             levelDifficulty = Level.PreIntermediate;
             Texts[levelDifficulty] = new List<string>();
             Texts[levelDifficulty].Add("Жизнь дается один раз, и хочется прожить ее бодро, осмысленно, красиво.");
-            Texts[levelDifficulty].Add("Он охотно давал их читать, никогда не требуя их назад; зато никогда не возвращал хозяину книги, им занятой.");
-            Texts[levelDifficulty].Add("Канонада ста­ла сла­бее, одна­ко трес­кот­ня ружей сза­ди и спра­ва слы­ша­лась все чаще и чаще.");
-            Texts[levelDifficulty].Add("То степь откры­ва­лась далё­кая и мол­ча­ли­вая, то низ­кие, подер­ну­тые кро­вью тучи, " +
+            Texts[levelDifficulty]
+                .Add(
+                    "Он охотно давал их читать, никогда не требуя их назад; зато никогда не возвращал хозяину книги, им занятой.");
+            Texts[levelDifficulty]
+                .Add(
+                    "Канонада ста­ла сла­бее, одна­ко трес­кот­ня ружей сза­ди и спра­ва слы­ша­лась все чаще и чаще.");
+            Texts[levelDifficulty].Add(
+                "То степь откры­ва­лась далё­кая и мол­ча­ли­вая, то низ­кие, подер­ну­тые кро­вью тучи, " +
                 "а то и люди, и паро­вик, и моло­тил­ка разом тону­ли в чер­ном мра­ке.");
-            Texts[levelDifficulty].Add("Время стояло самое благоприятное, то есть было темно, слегка морозно и совершенно тихо.");
-            Texts[levelDifficulty].Add("До этой поры он не жил, а лишь существовал, правда очень недурно, но все же возлагая все надежды на будущее.");
+            Texts[levelDifficulty]
+                .Add("Время стояло самое благоприятное, то есть было темно, слегка морозно и совершенно тихо.");
+            Texts[levelDifficulty]
+                .Add(
+                    "До этой поры он не жил, а лишь существовал, правда очень недурно, но все же возлагая все надежды на будущее.");
 
             levelDifficulty = Level.Intermediate;
             Texts[levelDifficulty] = new List<string>();
             Texts[levelDifficulty].Add("Светлые, прозрачно набегающие морщины моют золотой песок, да чуть приметно " +
-                "шевелятся тёмные листья задумчиво свесившихся над обрывом с размытыми весеннею водою корнями деревьев.");
-            Texts[levelDifficulty].Add("Милостивое писание ваше я получил, в котором изволишь гневаться на меня, раба вашего, что-де стыдно мне не исполнять господских приказаний; а я, не старый пес, а верный ваш слуга, господских " +
+                                       "шевелятся тёмные листья задумчиво свесившихся над обрывом с размытыми весеннею водою корнями деревьев.");
+            Texts[levelDifficulty].Add(
+                "Милостивое писание ваше я получил, в котором изволишь гневаться на меня, раба вашего, что-де стыдно мне не исполнять господских приказаний; а я, не старый пес, а верный ваш слуга, господских " +
                 "приказаний слушаюсь и усердно вам всегда служил и дожил до седых волос");
-            Texts[levelDifficulty].Add("Я хотел уже выйти из дому, как дверь моя отворилась и ко мне явился капрал с донесением, " +
+            Texts[levelDifficulty].Add(
+                "Я хотел уже выйти из дому, как дверь моя отворилась и ко мне явился капрал с донесением, " +
                 "что наши казаки ночью выступили из крепости, взяв насильно с собою Юлая, и что около крепости разъезжают неведомые люди.");
-            Texts[levelDifficulty].Add("Туман лежал белой колыхающейся гладью у его ног, но над ним сияло голубое небо, " +
+            Texts[levelDifficulty].Add(
+                "Туман лежал белой колыхающейся гладью у его ног, но над ним сияло голубое небо, " +
                 "и шептались душистые зеленые ветви, а золотые лучи солнца звенели ликующим торжеством победы.");
-            Texts[levelDifficulty].Add("Ней, шедший последним (потому что, несмотря на несчастное их положение или именно вследствие его, им хотелось побить тот пол, который ушиб их, он занялся взрыванием никому не мешавших стен Смоленска), — " +
+            Texts[levelDifficulty].Add(
+                "Ней, шедший последним (потому что, несмотря на несчастное их положение или именно вследствие его, им хотелось побить тот пол, который ушиб их, он занялся взрыванием никому не мешавших стен Смоленска), — " +
                 "шедший последним, Ней, с своим десятитысячным корпусом, прибежал в Оршу к " +
                 "Наполеону только с тысячью человеками, побросав и всех людей, и все пушки и ночью, украдучись, пробравшись лесом через Днепр.");
 
@@ -123,7 +136,7 @@ namespace WpfKeyboardSimulatorApp
             IsStop = false;
             IsCaseSensative = true;
 
-            KeyBigSmall(false); 
+            KeyBigSmall(false);
             TurnOffTabIndex();
 
             Timer = new DispatcherTimer();
@@ -140,11 +153,13 @@ namespace WpfKeyboardSimulatorApp
         {
             KeyUpButton();
         }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeSecond += 1;
             CalcSymbols();
         }
+
         private void CalcSymbols()
         {
             float min = 0;
@@ -153,10 +168,10 @@ namespace WpfKeyboardSimulatorApp
 
             if (TimeSecond / 1000 > 60)
             {
-
                 min = (float)(TimeSecond / 1000f) / 60f;
                 res = (int)(res / min);
             }
+
             Speed = res;
             SpeedLabel.Content = "Скорость " + res.ToString() + "симв/мин";
         }
@@ -168,47 +183,47 @@ namespace WpfKeyboardSimulatorApp
         //    for (int i = 0; i < count; i++)
         //    {
         //        if (i % 4 == 0 || i % 6 == 0)  stringBuilder.Append(" ");
-                
+
         //        stringBuilder.Append(randText[random.Next(0, randText.Length)]);
         //    }
         //    string newText = stringBuilder.ToString();
         //    return newText;
         //}
-        //public void SymbolOnOff()
-        //{
-        //    if (Symbol)
-        //    {
-        //        Oem3.Content = "~";
-        //        D1.Content = "!";
-        //        D2.Content = "@";
-        //        D3.Content = "#";
-        //        D4.Content = "$";
-        //        D5.Content = "%";
-        //        D6.Content = "^";
-        //        D7.Content = "&";
-        //        D8.Content = "*";
-        //        D9.Content = "(";
-        //        D0.Content = ")";
-        //        OemMinus.Content = "_";
-        //        OemPlus.Content = "+";
-        //    }
-        //    else
-        //    {
-        //        Oem3.Content = ",";
-        //        D1.Content = "1";
-        //        D2.Content = "2";
-        //        D3.Content = "3";
-        //        D4.Content = "4";
-        //        D5.Content = "5";
-        //        D6.Content = "6";
-        //        D7.Content = "7";
-        //        D8.Content = "8";
-        //        D9.Content = "9";
-        //        D0.Content = "0";
-        //        OemMinus.Content = "-";
-        //        OemPlus.Content = "=";
-        //    }
-        //}
+        public void SymbolOnOff()
+        {
+            if (Symbol)
+            {
+                Oem3.Content = "~";
+                D1.Content = "!";
+                D2.Content = "@";
+                D3.Content = "#";
+                D4.Content = "$";
+                D5.Content = "%";
+                D6.Content = "^";
+                D7.Content = "&";
+                D8.Content = "*";
+                D9.Content = "(";
+                D0.Content = ")";
+                OemMinus.Content = "_";
+                OemPlus.Content = "+";
+            }
+            else
+            {
+                Oem3.Content = ",";
+                D1.Content = "1";
+                D2.Content = "2";
+                D3.Content = "3";
+                D4.Content = "4";
+                D5.Content = "5";
+                D6.Content = "6";
+                D7.Content = "7";
+                D8.Content = "8";
+                D9.Content = "9";
+                D0.Content = "0";
+                OemMinus.Content = "-";
+                OemPlus.Content = "=";
+            }
+        }
 
         //private void SliderDificult_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         //{
@@ -219,14 +234,14 @@ namespace WpfKeyboardSimulatorApp
         {
             KeyUpButton();
             KeyPress(e.Key.ToString());
-            
+
 
             if (e.Key == Key.LeftShift)
             {
                 Symbol = e.IsToggled;
                 SymbolOnOff();
                 return;
-            }            
+            }
 
             if (e.Key == Key.CapsLock)
             {
@@ -238,11 +253,11 @@ namespace WpfKeyboardSimulatorApp
             if (!ButtonStart.IsEnabled)
             {
                 if (e.Key == Key.Enter ||
-                e.Key == Key.LWin ||
-                e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
-                e.Key == Key.RWin ||
-                e.Key == Key.RightShift || e.Key == Key.LeftShift ||
-                e.Key == Key.RightCtrl || e.Key == Key.LeftCtrl)
+                    e.Key == Key.LWin ||
+                    e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
+                    e.Key == Key.RWin ||
+                    e.Key == Key.RightShift || e.Key == Key.LeftShift ||
+                    e.Key == Key.RightCtrl || e.Key == Key.LeftCtrl)
                 {
                     return;
                 }
@@ -267,7 +282,7 @@ namespace WpfKeyboardSimulatorApp
                         }
                         else if (e.Key.ToString() == "Tab")
                         {
-                              Text.Append("\t");                           
+                            Text.Append("\t");
                         }
                         else
                         {
@@ -295,7 +310,6 @@ namespace WpfKeyboardSimulatorApp
                                 if (Text[index].Equals(TextBlockRead.Text[index]))
                                 {
                                     FormatingText(Text.Length - 1, Text[index].ToString(), false);
-
                                 }
                                 else
                                 {
@@ -305,7 +319,8 @@ namespace WpfKeyboardSimulatorApp
                             }
                             else
                             {
-                                if (Text[index].ToString().ToLower().Equals(TextBlockRead.Text[index].ToString().ToLower()))
+                                if (Text[index].ToString().ToLower()
+                                    .Equals(TextBlockRead.Text[index].ToString().ToLower()))
                                 {
                                     FormatingText(Text.Length - 1, Text[index].ToString(), false);
                                 }
@@ -323,33 +338,34 @@ namespace WpfKeyboardSimulatorApp
                         ButtonStop_Click(sender, e);
                     }
                 }
+
                 ErorCountLabel.Content = "False : " + ErrorCount;
             }
         }
-       
+
         public void TurnOffTabIndex()
         {
             foreach (Grid item in BaseGrid.Children)
             {
                 foreach (var element in item.Children)
                 {
-
                     if (element is Button button)
                     {
                         button.IsTabStop = false;
                     }
                 }
             }
+
             SliderDificult.IsTabStop = false;
             CaseSensative.IsTabStop = false;
         }
+
         public void KeyUpButton()
         {
             foreach (Grid item in BaseGrid.Children)
             {
                 foreach (var element in item.Children)
                 {
-
                     if (element is Button button)
                     {
                         button.Margin = new Thickness(0);
@@ -357,6 +373,7 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
+
         public void KeyPress(string keyName)
         {
             foreach (Grid item in BaseGrid.Children)
@@ -386,6 +403,7 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
+
         public void KeyBigSmall(bool isSmall)
         {
             foreach (Grid item in BaseGrid.Children)
@@ -396,12 +414,12 @@ namespace WpfKeyboardSimulatorApp
                     {
                         if (button.Name != Key.CapsLock.ToString() && button.Name != Key.Return.ToString() &&
                             button.Name != Key.LWin.ToString() && button.Name != Key.Back.ToString() &&
-                             button.Name.ToString() != "System1" && button.Name.ToString() != "System2" &&
+                            button.Name.ToString() != "System1" && button.Name.ToString() != "System2" &&
                             button.Name != Key.RWin.ToString() && button.Name != Key.Tab.ToString() &&
                             button.Name != Key.RightShift.ToString() && button.Name != Key.LeftShift.ToString() &&
-                             button.Name != Key.RightCtrl.ToString() && button.Name != Key.LeftCtrl.ToString() &&
-                             button.Name.ToString() != "ButtonStart" && button.Name.ToString() != "ButtonStop" &&
-                             button.Name != Key.Space.ToString())
+                            button.Name != Key.RightCtrl.ToString() && button.Name != Key.LeftCtrl.ToString() &&
+                            button.Name.ToString() != "ButtonStart" && button.Name.ToString() != "ButtonStop" &&
+                            button.Name != Key.Space.ToString())
                         {
                             if (isSmall)
                             {
@@ -416,6 +434,7 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
+
         //private void ButtonStart_Click(object sender, RoutedEventArgs e)
         //{
         //    Text.Clear();
