@@ -27,8 +27,7 @@ namespace WpfKeyboardSimulatorApp
 
             if (e.Key == Key.LeftShift)
             {
-                Symbol = e.IsToggled;
-                SymbolOnOff();
+                SymbolOnOff(e.IsToggled);
                 return;
             }
 

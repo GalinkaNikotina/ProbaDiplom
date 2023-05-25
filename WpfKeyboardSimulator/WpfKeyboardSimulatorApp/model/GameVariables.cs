@@ -16,6 +16,8 @@
             TimeSecond = 0;
             LevelOfDifficulty = Level.Beginner;
             ErrorCount = 0;
+            IsCaseSensitive = false;
+            IsStop = false;
         }
     }
 }

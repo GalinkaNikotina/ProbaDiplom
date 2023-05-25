@@ -27,7 +27,6 @@ namespace WpfKeyboardSimulatorApp
     {
         private IDictionaryRepository _dictionaryRepository;
         public GameVariables GameVariables { get; private set; }
-        public bool Symbol { get; set; }
 
 
         public string TextForRead { get; set; }
@@ -49,10 +48,8 @@ namespace WpfKeyboardSimulatorApp
             Dictionary = new Dictionary<Level, List<string>>();
             Dictionary = _dictionaryRepository.FindByLevel(GameVariables.LevelOfDifficulty);
 
-            ButtonStop.IsEnabled = false;
-            GameVariables.IsStop = false;
-            GameVariables.IsCaseSensitive = true;
 
+            ButtonStop.IsEnabled = false;
             SetRegister(false);
             TurnOffTabIndex();
 
@@ -93,9 +90,9 @@ namespace WpfKeyboardSimulatorApp
             SpeedLabel.Content = "Скорость " + res.ToString() + "симв/мин";
         }
 
-        public void SymbolOnOff()
+        public void SymbolOnOff(bool isToggled)
         {
-            if (Symbol)
+            if (isToggled)
             {
                 Oem3.Content = "~";
                 D1.Content = "!";
@@ -128,8 +125,6 @@ namespace WpfKeyboardSimulatorApp
                 OemPlus.Content = "=";
             }
         }
-
-
 
 
         public void TurnOffTabIndex()
