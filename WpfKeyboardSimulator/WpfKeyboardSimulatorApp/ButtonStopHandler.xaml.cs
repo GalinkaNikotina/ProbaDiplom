@@ -24,7 +24,7 @@ namespace WpfKeyboardSimulatorApp
        
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-            Finish(IsStop);
+            Finish(GameVariables.IsStop);
             ButtonStop.IsEnabled = false;
             ButtonStart.IsEnabled = true;
             Timer.Stop();

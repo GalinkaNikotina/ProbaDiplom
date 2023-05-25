@@ -34,11 +34,11 @@
 
             <Label  Height="25" Name="SpeedLabel" Content="Скорость: 0 симв/мин"/>
             <Label  Height="25" x:Name="ErorCountLabel" Grid.Column="1" Content="Ошибок: 0"/>
-            <Label  Height="25" HorizontalContentAlignment="Left" Grid.Column="2" Name="DificultLabel"  DockPanel.Dock="Left">Dificult : Beginner</Label>
+            <Label  Height="25" HorizontalContentAlignment="Left" Grid.Column="2" Name="DificultLabel"  DockPanel.Dock="Left">Difficult : Beginner</Label>
             <Slider  Height="25" TickPlacement="BottomRight" TickFrequency="1"  Grid.Column="3" x:Name="SliderDificult" ValueChanged="SliderDificult_ValueChanged" Minimum="0" Value="0" Maximum="5"  VerticalAlignment="Center"></Slider>
 
 
-            <CheckBox  Height="25" Click="CaseSensative_Click" x:Name="CaseSensative" IsChecked="True" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" Content="Учитывание регистра" />
+            <CheckBox  Height="25" Click="CaseSensative_Click" x:Name="CaseSensitive" IsChecked="True" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" Content="Учитывание регистра" />
 
             <Button Click="ButtonStart_Click"  x:Name="ButtonStart" Grid.Column="3"  Grid.Row="2">Старт</Button>
             <Button Click="ButtonStop_Click" x:Name="ButtonStop" Grid.Column="4" Grid.Row="1">Стоп</Button>

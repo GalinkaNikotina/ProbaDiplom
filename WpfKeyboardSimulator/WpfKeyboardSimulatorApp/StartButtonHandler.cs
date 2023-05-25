@@ -25,7 +25,7 @@ namespace WpfKeyboardSimulatorApp
         {
             Text.Clear();
             TextBlockCheck.Text = "";
-            IsStop = false;
+            GameVariables.IsStop = false;
             SpeedLabel.Content = "Скорость 0 симв/мин";
             ErorCountLabel.Content = "Ошибки : 0";
             GameVariables.ErrorCount = 0;
@@ -33,8 +33,8 @@ namespace WpfKeyboardSimulatorApp
             ButtonStop.IsEnabled = true;
             ButtonStart.IsEnabled = false;
             Random random = new Random();
-            int num = random.Next(0, Texts.Count);
-            // TextForRead = Texts[num];
+            int num = random.Next(0, Dictionary.Count);
+            // TextForRead = Dictionary[num];
             TextBlockRead.Text = TextForRead;
         }
     }

@@ -6,6 +6,9 @@
         public int TimeSecond { get; set; }
         public Level LevelOfDifficulty { get; set; }
         public int ErrorCount { get; set; }
+        public bool IsCaseSensitive { get; set; }
+        public bool IsStop { get; set; }
+        
 
         public GameVariables()
         {
