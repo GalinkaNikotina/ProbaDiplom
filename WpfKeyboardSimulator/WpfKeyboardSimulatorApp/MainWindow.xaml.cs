@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WpfKeyboardSimulatorApp.repository;
+using WpfKeyboardSimulatorApp.symbol;
 
 namespace WpfKeyboardSimulatorApp
 {
@@ -44,9 +46,15 @@ namespace WpfKeyboardSimulatorApp
         public Button tmp2 { get; set; }
         public DispatcherTimer Timer { get; set; }
         public DispatcherTimer TimerButton { get; set; }
+
+        private ILetterSymbol symbol;
+
+        private IDictionaryRepository repository;
         public MainWindow()
         {
             InitializeComponent();
+
+            IDictionaryRepository repository = null;
 
             Texts = new Dictionary<Level, List<string>>();
 
@@ -92,22 +100,22 @@ namespace WpfKeyboardSimulatorApp
                 "Наполеону только с тысячью человеками, побросав и всех людей, и все пушки и ночью, украдучись, пробравшись лесом через Днепр.");
 
 
-            levelDifficulty = Level.Advanced;
-            Texts[levelDifficulty] = new List<string>();
-            for (int i = 0; i < 5; i++)
-            {
-                string text = RandomText(50);
-                Texts[levelDifficulty].Add(text);
-            }
+            //levelDifficulty = Level.Advanced;
+            //Texts[levelDifficulty] = new List<string>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    string text = RandomText(50);
+            //    Texts[levelDifficulty].Add(text);
+            //}
 
 
-            levelDifficulty = Level.Fluent;
-            Texts[levelDifficulty] = new List<string>();
-            for (int i = 0; i < 5; i++)
-            {
-                string text = RandomText(50);
-                Texts[levelDifficulty].Add(text);
-            }
+            //levelDifficulty = Level.Fluent;
+            //Texts[levelDifficulty] = new List<string>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    string text = RandomText(50);
+            //    Texts[levelDifficulty].Add(text);
+            //}
 
             ErrorCount = 0;
             levelDifficulty = 0;
@@ -152,96 +160,61 @@ namespace WpfKeyboardSimulatorApp
             Speed = res;
             SpeedLabel.Content = "Скорость " + res.ToString() + "симв/мин";
         }
-        public string RandomText(int count)
-        {
-            Random random = new Random();
-            string randText = "1234567890йцукенгшщзхъэждлорпавыфячсмитьбю.,./ЯЧСМИТЬБЮ.ЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФ";
-            StringBuilder stringBuilder = new StringBuilder(count);
-            for (int i = 0; i < count; i++)
-            {
-                if (i % 4 == 0 || i % 6 == 0)  stringBuilder.Append(" ");
+        //public string RandomText(int count)
+        //{
+        //    Random random = new Random();
+        //    string randText = "1234567890йцукенгшщзхъэждлорпавыфячсмитьбю.,./ЯЧСМИТЬБЮ.ЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФ";
+        //    StringBuilder stringBuilder = new StringBuilder(count);
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        if (i % 4 == 0 || i % 6 == 0)  stringBuilder.Append(" ");
                 
-                stringBuilder.Append(randText[random.Next(0, randText.Length)]);
-            }
-            string newText = stringBuilder.ToString();
-            return newText;
-        }
-        public void SymbolOnOff()
-        {
-            if (Symbol)
-            {
-                Oem3.Content = "~";
-                D1.Content = "!";
-                D2.Content = "@";
-                D3.Content = "#";
-                D4.Content = "$";
-                D5.Content = "%";
-                D6.Content = "^";
-                D7.Content = "&";
-                D8.Content = "*";
-                D9.Content = "(";
-                D0.Content = ")";
-                OemMinus.Content = "_";
-                OemPlus.Content = "+";
-            }
-            else
-            {
-                Oem3.Content = ",";
-                D1.Content = "1";
-                D2.Content = "2";
-                D3.Content = "3";
-                D4.Content = "4";
-                D5.Content = "5";
-                D6.Content = "6";
-                D7.Content = "7";
-                D8.Content = "8";
-                D9.Content = "9";
-                D0.Content = "0";
-                OemMinus.Content = "-";
-                OemPlus.Content = "=";
-            }
-        }
-        private void Finish(bool isFinis)
-        {
-            Timer.Stop();
+        //        stringBuilder.Append(randText[random.Next(0, randText.Length)]);
+        //    }
+        //    string newText = stringBuilder.ToString();
+        //    return newText;
+        //}
+        //public void SymbolOnOff()
+        //{
+        //    if (Symbol)
+        //    {
+        //        Oem3.Content = "~";
+        //        D1.Content = "!";
+        //        D2.Content = "@";
+        //        D3.Content = "#";
+        //        D4.Content = "$";
+        //        D5.Content = "%";
+        //        D6.Content = "^";
+        //        D7.Content = "&";
+        //        D8.Content = "*";
+        //        D9.Content = "(";
+        //        D0.Content = ")";
+        //        OemMinus.Content = "_";
+        //        OemPlus.Content = "+";
+        //    }
+        //    else
+        //    {
+        //        Oem3.Content = ",";
+        //        D1.Content = "1";
+        //        D2.Content = "2";
+        //        D3.Content = "3";
+        //        D4.Content = "4";
+        //        D5.Content = "5";
+        //        D6.Content = "6";
+        //        D7.Content = "7";
+        //        D8.Content = "8";
+        //        D9.Content = "9";
+        //        D0.Content = "0";
+        //        OemMinus.Content = "-";
+        //        OemPlus.Content = "=";
+        //    }
+        //}
 
-            StringBuilder msg = new StringBuilder(150);
-
-            if (isFinis)
-            {
-                msg.Append("Вы завершили тренинг!\r\r");
-            }
-            else
-            {
-                msg.Append("Вы не завершили тренинг!\r\r");
-            }
-
-            CalcSymbols();
-
-            msg.Append($"Выбран уровень : {levelDifficulty}\r Результат:\r Скорость набора: {Speed} симв/мин\r");
-            msg.Append($"Ошибки: {ErrorCount}\r");
-
-            if (Text.Length == 0)
-            {
-                msg.Append($"Правильность набора 0 %");
-            }
-            else if (ErrorCount == 0 && Text.Length != 0)
-            {
-                msg.Append($"Правильность набора { TextBlockCheck.Text.Length * 100 / Text.Length } %");
-            }
-            else
-            {
-                msg.Append($"Правильность набора { (TextBlockCheck.Text.Length - ErrorCount) * 100 / Text.Length } %");
-            }
-
-
-            MessageBox.Show(msg.ToString(), this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        private void SliderDificult_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            levelDifficulty = (Level)SliderDificult.Value;
-            DificultLabel.Content = "Уровень : " + levelDifficulty.ToString();
-        }
+        //private void SliderDificult_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    levelDifficulty = (Level)SliderDificult.Value;
+        //    DificultLabel.Content = "Уровень : " + levelDifficulty.ToString();
+        //}
         private void Window_KeyDown_1(object sender, KeyEventArgs e)
         {
             KeyUpButton();
@@ -251,7 +224,7 @@ namespace WpfKeyboardSimulatorApp
             if (e.Key == Key.LeftShift)
             {
                 Symbol = e.IsToggled;
-                SymbolOnOff();
+                ILetterSymbol();
                 return;
             }            
 
@@ -353,54 +326,7 @@ namespace WpfKeyboardSimulatorApp
                 ErorCountLabel.Content = "False : " + ErrorCount;
             }
         }
-        private void FormatingText(int index, string _char, bool error)
-        {
-            Span result = new Span();
-            Span baseText = new Span();
-            Span tmp = new Span();
-
-            var startText = new Span(new Run(TextBlockRead.Text.ToString().Substring(0, index)))
-            {
-                Background = Brushes.Green,
-                Foreground = Brushes.White
-            };
-
-            string endOfText = TextBlockRead.Text.ToString().Substring(index + 1, TextBlockRead.Text.Length - index - 1);
-
-            var bChar = new Span(new Run(TextBlockRead.Text[index].ToString()))
-            {
-                Background = Brushes.Green,
-                Foreground = Brushes.White
-            };
-
-            if (!error)
-            {
-                tmp = new Span(new Run(_char))
-                {
-                    Background = Brushes.Green,
-                    Foreground = Brushes.White
-                };
-            }
-            else
-            {
-                tmp = new Span(new Run(_char))
-                {
-                    Background = Brushes.Red,
-                    Foreground = Brushes.White,
-                    FontWeight = FontWeights.Bold
-                };
-            }
-
-            baseText.Inlines.Add(startText);
-            baseText.Inlines.Add(bChar);
-            baseText.Inlines.Add(endOfText);
-
-            result.Inlines.Add(tmp);
-
-            TextBlockRead.Inlines.Clear();
-            TextBlockRead.Inlines.Add(baseText);
-            TextBlockCheck.Inlines.Add(result);
-        }
+       
         public void TurnOffTabIndex()
         {
             foreach (Grid item in BaseGrid.Children)
@@ -490,32 +416,32 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {
-            Text.Clear();
-            TextBlockCheck.Text = "";
-            IsStop = false;
-            SpeedLabel.Content = "Скорость 0 симв/мин";
-            ErorCountLabel.Content = "Ошибки : 0";
-            ErrorCount = 0;
-            Timer.Start();
-            ButtonStop.IsEnabled = true;
-            ButtonStart.IsEnabled = false;
-            Random random = new Random();
-            int num = random.Next(0, Texts[levelDifficulty].Count);
-            TextForRead = Texts[levelDifficulty][num];
-            TextBlockRead.Text = TextForRead;
-        }
+        //private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Text.Clear();
+        //    TextBlockCheck.Text = "";
+        //    IsStop = false;
+        //    SpeedLabel.Content = "Скорость 0 симв/мин";
+        //    ErorCountLabel.Content = "Ошибки : 0";
+        //    ErrorCount = 0;
+        //    Timer.Start();
+        //    ButtonStop.IsEnabled = true;
+        //    ButtonStart.IsEnabled = false;
+        //    Random random = new Random();
+        //    int num = random.Next(0, Texts[levelDifficulty].Count);
+        //    TextForRead = Texts[levelDifficulty][num];
+        //    TextBlockRead.Text = TextForRead;
+        //}
         private void CaseSensative_Click(object sender, RoutedEventArgs e)
         {
             IsCaseSensative = CaseSensative.IsChecked;
         }
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-            Finish(IsStop);
-            ButtonStop.IsEnabled = false;
-            ButtonStart.IsEnabled = true;
-            Timer.Stop();
-        }
+        //private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Finish(IsStop);
+        //    ButtonStop.IsEnabled = false;
+        //    ButtonStart.IsEnabled = true;
+        //    Timer.Stop();
+        //}
     }
 }
