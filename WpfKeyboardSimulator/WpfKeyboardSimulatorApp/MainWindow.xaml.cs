@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WpfKeyboardSimulatorApp.model;
 using WpfKeyboardSimulatorApp.repository;
 using WpfKeyboardSimulatorApp.symbol;
 
@@ -22,29 +23,20 @@ namespace WpfKeyboardSimulatorApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public enum Level
-    {
-        Beginner,
-        Elementary,
-        PreIntermediate,
-        Intermediate,
-        Advanced,
-        Fluent
-    }
+  
 
     public partial class MainWindow : Window
     {
+        private IDictionaryRepository _dictionaryRepository;
+        public GameVariables GameVariables { get; private set; }
         public bool Symbol { get; set; }
         public bool IsStop { get; set; }
-        public int Speed { get; set; }
-        public int TimeSecond { get; set; }
-        public int ErrorCount { get; set; }
+        
         public bool? IsCaseSensative { get; set; }
         public string TextForRead { get; set; }
         public bool IsToggled { get; set; } = false;
         public StringBuilder Text { get; set; } = new StringBuilder(100);
         public List<string> MyProperty { get; set; }
-        public Level levelDifficulty { get; set; }
         public Dictionary<Level, List<string>> Texts { get; set; }
         public Button tmp { get; set; }
         public Button tmp2 { get; set; }
@@ -54,84 +46,12 @@ namespace WpfKeyboardSimulatorApp
         public MainWindow()
         {
             InitializeComponent();
-
-            IDictionaryRepository repository = null;
+            this.GameVariables = new GameVariables();
+            _dictionaryRepository = new DictionaryRepository();
 
             Texts = new Dictionary<Level, List<string>>();
-
-            levelDifficulty = Level.Beginner;
-            Texts[levelDifficulty] = new List<string>();
-            Texts[levelDifficulty].Add("Картечь хватила в самую середину толпы.");
-            Texts[levelDifficulty].Add("Сегодня идет сильный дождь!");
-            Texts[levelDifficulty].Add("Уймись, или худо будет.");
-            Texts[levelDifficulty].Add("Солнечные чудесные города.");
-            Texts[levelDifficulty].Add("Однажды Петя возвращался из детского сада.");
-
-
-            levelDifficulty = Level.Elementary;
-            Texts[levelDifficulty] = new List<string>();
-            Texts[levelDifficulty].Add("В сенях пах­ло све­жи­ми ябло­ка­ми и висе­ли вол­чьи и лисьи шкуры.");
-            Texts[levelDifficulty].Add("Ни души не попа­лось на пути, ни огня за став­ня­ми.");
-            Texts[levelDifficulty].Add("Казнить так казнить, жаловать так жаловать");
-            Texts[levelDifficulty].Add("То ль былое вспо­ми­на­ет­ся, то ль небыв­шее зовёт?");
-            Texts[levelDifficulty].Add("Тропинка обо­гну­ла куст ореш­ни­ка, и лес сра­зу раз­дал­ся в сто­ро­ны.");
-            Texts[levelDifficulty].Add("Голова еще боле­ла, созна­ние же было ясное, отчёт­ли­вое.");
-            levelDifficulty = Level.PreIntermediate;
-            Texts[levelDifficulty] = new List<string>();
-            Texts[levelDifficulty].Add("Жизнь дается один раз, и хочется прожить ее бодро, осмысленно, красиво.");
-            Texts[levelDifficulty]
-                .Add(
-                    "Он охотно давал их читать, никогда не требуя их назад; зато никогда не возвращал хозяину книги, им занятой.");
-            Texts[levelDifficulty]
-                .Add(
-                    "Канонада ста­ла сла­бее, одна­ко трес­кот­ня ружей сза­ди и спра­ва слы­ша­лась все чаще и чаще.");
-            Texts[levelDifficulty].Add(
-                "То степь откры­ва­лась далё­кая и мол­ча­ли­вая, то низ­кие, подер­ну­тые кро­вью тучи, " +
-                "а то и люди, и паро­вик, и моло­тил­ка разом тону­ли в чер­ном мра­ке.");
-            Texts[levelDifficulty]
-                .Add("Время стояло самое благоприятное, то есть было темно, слегка морозно и совершенно тихо.");
-            Texts[levelDifficulty]
-                .Add(
-                    "До этой поры он не жил, а лишь существовал, правда очень недурно, но все же возлагая все надежды на будущее.");
-
-            levelDifficulty = Level.Intermediate;
-            Texts[levelDifficulty] = new List<string>();
-            Texts[levelDifficulty].Add("Светлые, прозрачно набегающие морщины моют золотой песок, да чуть приметно " +
-                                       "шевелятся тёмные листья задумчиво свесившихся над обрывом с размытыми весеннею водою корнями деревьев.");
-            Texts[levelDifficulty].Add(
-                "Милостивое писание ваше я получил, в котором изволишь гневаться на меня, раба вашего, что-де стыдно мне не исполнять господских приказаний; а я, не старый пес, а верный ваш слуга, господских " +
-                "приказаний слушаюсь и усердно вам всегда служил и дожил до седых волос");
-            Texts[levelDifficulty].Add(
-                "Я хотел уже выйти из дому, как дверь моя отворилась и ко мне явился капрал с донесением, " +
-                "что наши казаки ночью выступили из крепости, взяв насильно с собою Юлая, и что около крепости разъезжают неведомые люди.");
-            Texts[levelDifficulty].Add(
-                "Туман лежал белой колыхающейся гладью у его ног, но над ним сияло голубое небо, " +
-                "и шептались душистые зеленые ветви, а золотые лучи солнца звенели ликующим торжеством победы.");
-            Texts[levelDifficulty].Add(
-                "Ней, шедший последним (потому что, несмотря на несчастное их положение или именно вследствие его, им хотелось побить тот пол, который ушиб их, он занялся взрыванием никому не мешавших стен Смоленска), — " +
-                "шедший последним, Ней, с своим десятитысячным корпусом, прибежал в Оршу к " +
-                "Наполеону только с тысячью человеками, побросав и всех людей, и все пушки и ночью, украдучись, пробравшись лесом через Днепр.");
-
-
-            //levelDifficulty = Level.Advanced;
-            //Texts[levelDifficulty] = new List<string>();
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    string text = RandomText(50);
-            //    Texts[levelDifficulty].Add(text);
-            //}
-
-
-            //levelDifficulty = Level.Fluent;
-            //Texts[levelDifficulty] = new List<string>();
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    string text = RandomText(50);
-            //    Texts[levelDifficulty].Add(text);
-            //}
-
-            ErrorCount = 0;
-            levelDifficulty = 0;
+            Texts = _dictionaryRepository.FindByLevel(GameVariables.LevelOfDifficulty);
+            
             ButtonStop.IsEnabled = false;
             IsStop = false;
             IsCaseSensative = true;
@@ -156,7 +76,7 @@ namespace WpfKeyboardSimulatorApp
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            TimeSecond += 1;
+            GameVariables.TimeSecond += 1;
             CalcSymbols();
         }
 
@@ -166,13 +86,13 @@ namespace WpfKeyboardSimulatorApp
 
             int res = TextBlockCheck.Text.Length;
 
-            if (TimeSecond / 1000 > 60)
+            if (GameVariables.TimeSecond / 1000 > 60)
             {
-                min = (float)(TimeSecond / 1000f) / 60f;
+                min = (float)(GameVariables.TimeSecond / 1000f) / 60f;
                 res = (int)(res / min);
             }
 
-            Speed = res;
+            GameVariables.Speed = res;
             SpeedLabel.Content = "Скорость " + res.ToString() + "симв/мин";
         }
         //public string RandomText(int count)
@@ -314,7 +234,7 @@ namespace WpfKeyboardSimulatorApp
                                 else
                                 {
                                     FormatingText(Text.Length - 1, Text[index].ToString(), true);
-                                    ErrorCount++;
+                                    GameVariables.ErrorCount++;
                                 }
                             }
                             else
@@ -327,7 +247,7 @@ namespace WpfKeyboardSimulatorApp
                                 else
                                 {
                                     FormatingText(Text.Length - 1, Text[index].ToString(), true);
-                                    ErrorCount++;
+                                    GameVariables.ErrorCount++;
                                 }
                             }
                         }
@@ -339,7 +259,7 @@ namespace WpfKeyboardSimulatorApp
                     }
                 }
 
-                ErorCountLabel.Content = "False : " + ErrorCount;
+                ErorCountLabel.Content = "False : " + GameVariables.ErrorCount;
             }
         }
 

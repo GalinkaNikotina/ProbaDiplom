@@ -28,13 +28,13 @@ namespace WpfKeyboardSimulatorApp
             IsStop = false;
             SpeedLabel.Content = "Скорость 0 симв/мин";
             ErorCountLabel.Content = "Ошибки : 0";
-            ErrorCount = 0;
+            GameVariables.ErrorCount = 0;
             Timer.Start();
             ButtonStop.IsEnabled = true;
             ButtonStart.IsEnabled = false;
             Random random = new Random();
-            int num = random.Next(0, Texts[levelDifficulty].Count);
-            TextForRead = Texts[levelDifficulty][num];
+            int num = random.Next(0, Texts.Count);
+            // TextForRead = Texts[num];
             TextBlockRead.Text = TextForRead;
         }
     }

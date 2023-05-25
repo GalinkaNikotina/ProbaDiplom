@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WpfKeyboardSimulatorApp.model;
 
 namespace WpfKeyboardSimulatorApp
 {
@@ -23,8 +24,8 @@ namespace WpfKeyboardSimulatorApp
 
         private void SliderDificult_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            levelDifficulty = (Level)SliderDificult.Value;
-            DificultLabel.Content = "Уровень : " + levelDifficulty.ToString();
+            GameVariables.LevelOfDifficulty = (Level)SliderDificult.Value;
+            DificultLabel.Content = "Уровень : " + GameVariables.LevelOfDifficulty.ToString();
         }
     }
 }

@@ -38,20 +38,20 @@ namespace WpfKeyboardSimulatorApp
 
             CalcSymbols();
 
-            msg.Append($"Выбран уровень : {levelDifficulty}\r Результат:\r Скорость набора: {Speed} симв/мин\r");
-            msg.Append($"Ошибки: {ErrorCount}\r");
+            msg.Append($"Выбран уровень : {GameVariables.LevelOfDifficulty}\r Результат:\r Скорость набора: {GameVariables.Speed} симв/мин\r");
+            msg.Append($"Ошибки: {GameVariables.LevelOfDifficulty}\r");
 
             if (Text.Length == 0)
             {
                 msg.Append($"Правильность набора 0 %");
             }
-            else if (ErrorCount == 0 && Text.Length != 0)
+            else if (GameVariables.ErrorCount == 0 && Text.Length != 0)
             {
                 msg.Append($"Правильность набора {TextBlockCheck.Text.Length * 100 / Text.Length} %");
             }
             else
             {
-                msg.Append($"Правильность набора {(TextBlockCheck.Text.Length - ErrorCount) * 100 / Text.Length} %");
+                msg.Append($"Правильность набора {(TextBlockCheck.Text.Length - GameVariables.ErrorCount) * 100 / Text.Length} %");
             }
 
 
