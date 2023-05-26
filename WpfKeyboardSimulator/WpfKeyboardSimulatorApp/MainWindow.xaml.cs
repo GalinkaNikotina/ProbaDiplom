@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfKeyboardSimulatorApp.model;
-using WpfKeyboardSimulatorApp.repository;
 
 namespace WpfKeyboardSimulatorApp
 {
@@ -25,20 +17,10 @@ namespace WpfKeyboardSimulatorApp
     public partial class MainWindow : Window
     {
         public bool Symbol { get; set; }
-        public bool IsStop { get; set; }
-        public int Speed { get; set; }
-        public int TimeSecond { get; set; }
-        public int ErrorCount { get; set; }
-        public bool? IsCaseSensative { get; set; }
-        public string TextForRead { get; set; }
-        public bool IsToggled { get; set; } = false;
         public StringBuilder Text { get; set; } = new StringBuilder(100);
-        public List<string> MyProperty { get; set; }
-        public Level LevelDifficulty { get; set; }
-        public Dictionary<Level, List<string>> Texts { get; set; }
+        public Dictionary<Level, List<string>> _dictionary { get; set; }
         public Button tmp { get; set; }
         public Button tmp2 { get; set; }
-        public DispatcherTimer Timer { get; set; }
         public DispatcherTimer TimerButton { get; set; }
 
 
@@ -113,16 +95,9 @@ namespace WpfKeyboardSimulatorApp
             }
         }
 
-        private void Finish(bool isFinis)
-        {
-            String resultMessage =
-                _game.StopGameAndShowFinishGameMessage(isFinis, CalcSymbols, TextBlockCheck.Text.Length);
-            MessageBox.Show(resultMessage, this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
         private void ChangeGameDifficulty(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _game.DifficultyLevel = (Level)SliderDifficult.Value;
+            _game.ChangeGameLevel((Level)SliderDifficult.Value);
             DificultLabel.Content = $"Уровень : {_game.DifficultyLevel}";
         }
 
@@ -143,7 +118,7 @@ namespace WpfKeyboardSimulatorApp
                 case Key.CapsLock:
                 {
                     KeyBigSmall(e.IsToggled);
-                    IsToggled = e.IsToggled;
+                    _userInput.IsToggled = e.IsToggled;
                     return;
                 }
             }
@@ -171,7 +146,7 @@ namespace WpfKeyboardSimulatorApp
                 }
                 else
                 {
-                    if (Text.Length < TextBlockRead.Text.Length)
+                    if (userInput.Length < TextBlockRead.Text.Length)
                     {
                         if (e.Key == Key.Space)
                         {
@@ -382,34 +357,29 @@ namespace WpfKeyboardSimulatorApp
             }
         }
 
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        private void OnButtonStartClick(object sender, RoutedEventArgs e)
         {
-            Text.Clear();
             TextBlockCheck.Text = "";
-            IsStop = false;
             SpeedLabel.Content = "Скорость 0 симв/мин";
             ErorCountLabel.Content = "Ошибки : 0";
-            ErrorCount = 0;
-            Timer.Start();
             ButtonStop.IsEnabled = true;
             ButtonStart.IsEnabled = false;
-            Random random = new Random();
-            int num = random.Next(0, Texts[LevelDifficulty].Count);
-            TextForRead = Texts[LevelDifficulty][num];
-            TextBlockRead.Text = TextForRead;
+            string newTextGoal = _game.GameRestart();
+            TextBlockRead.Text = newTextGoal;
         }
 
-        private void CaseSensative_Click(object sender, RoutedEventArgs e)
+        private void ChangeCaseSensitive(object sender, RoutedEventArgs e)
         {
-            IsCaseSensative = CaseSensitive.IsChecked;
+            _game.ChangeCaseSensitive((bool)CaseSensitive.IsChecked);
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-            Finish(IsStop);
+            String resultMessage =
+                _game.StopGameAndShowFinishGameMessage(CalcSymbols, TextBlockCheck.Text.Length);
+            MessageBox.Show(resultMessage, this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
             ButtonStop.IsEnabled = false;
             ButtonStart.IsEnabled = true;
-            Timer.Stop();
         }
     }
 }

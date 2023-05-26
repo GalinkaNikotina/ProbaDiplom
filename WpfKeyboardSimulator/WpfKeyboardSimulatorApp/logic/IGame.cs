@@ -8,7 +8,6 @@ namespace WpfKeyboardSimulatorApp.model
     {
         void IncreaseTimerOneSecond();
         void RemoveCurrentText();
-        void UpdateCurrentText(List<String> newText);
         bool InitText();
 
         bool ChangeGameLevel(Level level);
@@ -18,5 +17,8 @@ namespace WpfKeyboardSimulatorApp.model
         void UpdateUserInput(StringBuilder newInput);
         void IncrementError();
         void StopGame();
+        string GameRestart();
+
+        void ChangeCaseSensitive(bool isSensitive);
     }
 }

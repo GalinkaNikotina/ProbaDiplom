@@ -38,9 +38,9 @@
             <Slider  Height="25" TickPlacement="BottomRight" TickFrequency="1"  Grid.Column="3" x:Name="SliderDifficult" ValueChanged="ChangeGameDifficulty" Minimum="0" Value="0" Maximum="5"  VerticalAlignment="Center"></Slider>
 
 
-            <CheckBox  Height="25" Click="CaseSensative_Click" x:Name="CaseSensitive" IsChecked="True" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" Content="Учитывание регистра" />
+            <CheckBox  Height="25" Click="ChangeCaseSensitive" x:Name="CaseSensitive" IsChecked="True" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" Content="Учитывание регистра" />
 
-            <Button Click="ButtonStart_Click"  x:Name="ButtonStart" Grid.Column="3"  Grid.Row="2">Старт</Button>
+            <Button Click="OnButtonStartClick"  x:Name="ButtonStart" Grid.Column="3"  Grid.Row="2">Старт</Button>
             <Button Click="ButtonStop_Click" x:Name="ButtonStop" Grid.Column="4" Grid.Row="1">Стоп</Button>
 
 

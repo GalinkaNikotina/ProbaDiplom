@@ -12,56 +12,50 @@ namespace WpfKeyboardSimulatorApp.model
         private const String RepositoryErrorMessage =
             "Не удалось загрузить словарь данных для выбранного уровня сложности";
 
-        public Level DifficultyLevel { get; set; }
-        private GameStatus GameStatus { get; set; }
+        public Level DifficultyLevel { get; private set; }
+        private GameStatus _gameStatus;
         public int Speed { get; set; }
         public int ErrorCount { get; private set; }
         public bool CaseSensitive { get; set; }
         public int TimeSecond { get; set; }
 
         private GameTimer _timer;
-
-        private List<String> _currentText;
-        public GameText UserInput { get; set; }
-        private IDictionaryRepository _repository;
+        public GameText GameText { get; set; }
 
         public Game(Action<object, EventArgs> timerTick)
         {
             DifficultyLevel = Level.Beginner;
-            GameStatus = GameStatus.Started;
+            _gameStatus = GameStatus.Started;
             Speed = 0;
             ErrorCount = 0;
             CaseSensitive = true;
-            _currentText = new List<string>();
-            _repository = new DictionaryRepository();
 
-            UserInput = new GameText();
+            GameText = new GameText();
             _timer = new GameTimer();
             _timer.InitTimer(timerTick);
         }
 
         public void IncreaseTimerOneSecond()
         {
-            this.TimeSecond++;
+            TimeSecond++;
         }
+
 
         public void RemoveCurrentText()
         {
-            this._currentText = new List<string>();
+            GameText.ClearCurrentDictionary();
         }
 
-        public void UpdateCurrentText(List<string> newText)
+        public void UpdateCurrentDictionary(Level level)
         {
-            RemoveCurrentText();
-            this._currentText.AddRange(newText);
+            GameText.LoadDictionaryForLevel(level);
         }
 
         public bool InitText()
         {
             try
             {
-                List<string> text = _repository.FindByLevel(this.DifficultyLevel);
-                _currentText.AddRange(text);
+                GameText.Init(DifficultyLevel);
                 return true;
             }
             catch (Exception e)
@@ -76,8 +70,7 @@ namespace WpfKeyboardSimulatorApp.model
         {
             try
             {
-                List<string> text = _repository.FindByLevel(level);
-                UpdateCurrentText(text);
+                UpdateCurrentDictionary(level);
                 DifficultyLevel = level;
                 return true;
             }
@@ -105,12 +98,12 @@ namespace WpfKeyboardSimulatorApp.model
 
         public StringBuilder ExtractUserInput()
         {
-            return UserInput.Text;
+            return GameText.UserInput;
         }
 
         public void UpdateUserInput(StringBuilder newInput)
         {
-            UserInput.Text = newInput;
+            GameText.UpdateUserInput(newInput);
         }
 
         public void IncrementError()
@@ -120,21 +113,31 @@ namespace WpfKeyboardSimulatorApp.model
 
         public void StopGame()
         {
-            GameStatus = GameStatus.Stopped;
+            _gameStatus = GameStatus.Stopped;
         }
 
-        public string StopGameAndShowFinishGameMessage(bool isFinish, Action action, int textBlockLength)
+        public string GameRestart()
+        {
+            GameText.UpdateUserInput(new StringBuilder());
+            _gameStatus = GameStatus.Started;
+            ErrorCount = 0;
+            _timer.StartTimer();
+            GameText.Restart(DifficultyLevel);
+            return GameText.GoalText;
+        }
+
+        public void ChangeCaseSensitive(bool isSensitive)
+        {
+            CaseSensitive = isSensitive;
+        }
+
+        public string StopGameAndShowFinishGameMessage(Action action, int textBlockLength)
         {
             _timer.StopTimer();
             StringBuilder resultMessage = new StringBuilder(150);
-            if (isFinish)
-            {
-                resultMessage.Append("Вы завершили тренинг!\r\r");
-            }
-            else
-            {
-                resultMessage.Append("Вы не завершили тренинг!\r\r");
-            }
+            resultMessage.Append(_gameStatus == GameStatus.Stopped
+                ? "Вы завершили тренинг!\r\r"
+                : "Вы не завершили тренинг!\r\r");
 
             action.Invoke();
 
@@ -143,18 +146,18 @@ namespace WpfKeyboardSimulatorApp.model
                 $"Выбран уровень : {DifficultyLevel}\r Результат:\r Скорость набора: {Speed} симв/мин\r");
             resultMessage.Append($"Ошибки: {ErrorCount}\r");
 
-            if (UserInput.Text.Length == 0)
+            if (GameText.UserInput.Length == 0)
             {
                 resultMessage.Append($"Правильность набора 0 %");
             }
-            else if (ErrorCount == 0 && UserInput.Text.Length != 0)
+            else if (ErrorCount == 0 && GameText.UserInput.Length != 0)
             {
-                resultMessage.Append($"Правильность набора {textBlockLength * 100 / UserInput.Text.Length} %");
+                resultMessage.Append($"Правильность набора {textBlockLength * 100 / GameText.UserInput.Length} %");
             }
             else
             {
                 resultMessage.Append(
-                    $"Правильность набора {(textBlockLength - ErrorCount) * 100 / UserInput.Text.Length} %");
+                    $"Правильность набора {(textBlockLength - ErrorCount) * 100 / GameText.UserInput.Length} %");
             }
 
             return resultMessage.ToString();

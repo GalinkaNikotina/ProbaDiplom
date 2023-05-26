@@ -22,5 +22,10 @@ namespace WpfKeyboardSimulatorApp.model
         {
             this._timer.Stop();
         }
+
+        public void StartTimer()
+        {
+            _timer.Start();
+        }
     }
 }
