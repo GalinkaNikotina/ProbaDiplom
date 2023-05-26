@@ -4,7 +4,14 @@ using System.Text;
 using WpfKeyboardSimulatorApp.repository;
 
 namespace WpfKeyboardSimulatorApp.model
-{
+{   
+    /// <summary>
+    /// Класс отвечающий за взаимодействие с текстом
+    /// UserInput - текст который вводит пользователь
+    /// GoalText  - рандомно выбираемый из словаря текст который пользователь должен ввести
+    /// IDictionaryRepository - класс доступа доступа к словарю
+    /// _dictionary - список с загруженными для конкретного уровня сложности предложениями. Возможно стоит убрать ? Нужна ли логика, что после успешного ввода, пользователю дается следующее предложение из словаря
+    /// </summary>
     public class GameText : IGameText
     {
         public StringBuilder UserInput { get; private set; }

@@ -1,16 +1,27 @@
 ﻿namespace WpfKeyboardSimulatorApp.model
 {
-    public class UserInput
+    /// <summary>
+    /// Класс с настройками пользовательского ввода.
+    /// LetterCase - верхний нижний регистр
+    /// </summary>
+    public class UserInput : IUserInput
     {
-        public bool IsToggled { get; set; }
-        public bool IsCaseSensitive { get; set; }
-        public bool ButtonStopIsEnabled { get; set; }
+        public LetterCase LetterCase { get; private set; }
 
         public UserInput()
         {
-            IsToggled = false;
-            IsCaseSensitive = true;
-            ButtonStopIsEnabled = false;
+            LetterCase = LetterCase.Lower;
+        }
+
+
+        public void SetUpperCase()
+        {
+            LetterCase = LetterCase.Upper;
+        }
+
+        public void SetLowerCase()
+        {
+            LetterCase = LetterCase.Lower;
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Timers;
-using System.Windows.Threading;
-using WpfKeyboardSimulatorApp.repository;
 
 namespace WpfKeyboardSimulatorApp.model
 {
+    /// <summary>
+    /// Класс с основной логикой методы взаимодействия вынесены в интерфейс IGame
+    /// </summary>
     public class Game : IGame, IUserOutput
     {
         private const String RepositoryErrorMessage =
@@ -18,9 +17,8 @@ namespace WpfKeyboardSimulatorApp.model
         public int ErrorCount { get; private set; }
         public bool CaseSensitive { get; set; }
         public int TimeSecond { get; set; }
-
-        private GameTimer _timer;
         public GameText GameText { get; set; }
+        private GameTimer _timer;
 
         public Game(Action<object, EventArgs> timerTick)
         {
