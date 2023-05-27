@@ -48,36 +48,21 @@ namespace WpfKeyboardSimulatorApp.model
         {
             GameText.LoadDictionaryForLevel(level);
         }
-
+        /// <summary>
+        /// метод инциализирующий текст который пользователь должен ввести
+        /// </summary>
+        /// <returns></returns>
         public bool InitText()
         {
-            try
-            {
-                GameText.Init(DifficultyLevel);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.WriteLine(RepositoryErrorMessage);
-                return false;
-            }
+            GameText.Init(DifficultyLevel);
+            return true;
         }
 
         public bool ChangeGameLevel(Level level)
         {
-            try
-            {
-                UpdateCurrentDictionary(level);
-                DifficultyLevel = level;
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.WriteLine(RepositoryErrorMessage);
-                return false;
-            }
+            UpdateCurrentDictionary(level);
+            DifficultyLevel = level;
+            return true;
         }
 
         public void CalculateResult(int res)
@@ -136,7 +121,6 @@ namespace WpfKeyboardSimulatorApp.model
             resultMessage.Append(_gameStatus == GameStatus.Stopped
                 ? "Вы завершили тренинг!\r\r"
                 : "Вы не завершили тренинг!\r\r");
-
             action.Invoke();
 
 

@@ -24,7 +24,10 @@ namespace WpfKeyboardSimulatorApp.model
             UserInput = new StringBuilder(100);
             _repository = new DictionaryRepository();
         }
-
+        /// <summary>
+        /// выбирает из словаря рандомное предложение и устанавливает его целью 
+        /// </summary>
+        /// <param name="level"></param>
         public void Init(Level level)
         {
             List<string> textForCurrentLevel = _repository.FindByLevel(level);

@@ -12,12 +12,10 @@ using WpfKeyboardSimulatorApp.model;
 namespace WpfKeyboardSimulatorApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Класс логики взаимодействия WPF формы 
     /// </summary>
     public partial class MainWindow : Window
     {
-        public StringBuilder Text { get; set; } = new StringBuilder(100);
-        public Dictionary<Level, List<string>> _dictionary { get; set; }
         public Button tmp { get; set; }
         public Button tmp2 { get; set; }
         public DispatcherTimer TimerButton { get; set; }
@@ -34,8 +32,8 @@ namespace WpfKeyboardSimulatorApp
             _userInput = new UserInput();
             _game.InitText();
 
-            KeyBigSmall(false); //? 
-            TurnOffTabIndex(); // ? 
+            KeyBigSmall(false);
+            TurnOffTabIndex();
 
             TimerButton = new DispatcherTimer();
             TimerButton.Interval = new TimeSpan(5000000);
@@ -93,8 +91,6 @@ namespace WpfKeyboardSimulatorApp
                 OemPlus.Content = "=";
             }
         }
-
-
 
 
         private void FormattingText(int index, string _char, bool error)

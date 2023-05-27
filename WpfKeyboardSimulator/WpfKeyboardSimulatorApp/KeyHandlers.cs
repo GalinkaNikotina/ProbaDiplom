@@ -50,6 +50,7 @@ namespace WpfKeyboardSimulatorApp
             ErorCountLabel.Content = "Ошибки : 0";
             ButtonStop.IsEnabled = true;
             ButtonStart.IsEnabled = false;
+
             string newTextGoal = _game.GameRestart();
             TextBlockRead.Text = newTextGoal;
         }
@@ -109,7 +110,7 @@ namespace WpfKeyboardSimulatorApp
             StringBuilder userInput = _game.ExtractUserInput();
             KeyUpButton();
             KeyPress(e.Key.ToString());
-
+ 
             switch (e.Key)
             {
                 case Key.LeftShift:
@@ -121,10 +122,19 @@ namespace WpfKeyboardSimulatorApp
                 case Key.CapsLock:
                 {
                     KeyBigSmall(e.IsToggled);
-                    _userInput.SetUpperCase();
+                    if (_userInput.LetterCase == LetterCase.Upper)
+                    {
+                        _userInput.SetLowerCase();
+                    }
+                    else
+                    {
+                        _userInput.SetUpperCase();
+                    }
+
                     return;
                 }
             }
+
 
             if (!ButtonStart.IsEnabled)
             {
@@ -142,8 +152,7 @@ namespace WpfKeyboardSimulatorApp
                 {
                     if (TextBlockCheck.Text.Length > 0)
                     {
-                        StringBuilder oldUserInput = userInput;
-                        StringBuilder removeOneSymbolOldInput = oldUserInput.Remove(oldUserInput.Length - 1, 1);
+                        StringBuilder removeOneSymbolOldInput = userInput.Remove(userInput.Length - 1, 1);
                         TextBlockCheck.Text = removeOneSymbolOldInput.ToString();
                     }
                 }
@@ -165,7 +174,7 @@ namespace WpfKeyboardSimulatorApp
                             {
                                 foreach (var element in item.Children)
                                 {
-                                    if (element is Button button)
+                                    if (element is Button button) 
                                     {
                                         if (button.Name.Equals(e.Key.ToString()))
                                         {
@@ -201,7 +210,8 @@ namespace WpfKeyboardSimulatorApp
                                 }
                                 else
                                 {
-                                    FormattingText(Text.Length - 1, userInput[index].ToString(), true);
+                                    FormattingText(_game.ExtractUserInput().Length - 1, userInput[index].ToString(),
+                                        true);
                                     _game.IncrementError();
                                 }
                             }
