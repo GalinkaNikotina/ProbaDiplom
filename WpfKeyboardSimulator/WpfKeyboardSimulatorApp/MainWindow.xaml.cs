@@ -41,7 +41,11 @@ namespace WpfKeyboardSimulatorApp
             TimerButton.Start();
         }
 
-
+        /// <summary>
+        /// обработчик секунд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             _game.IncreaseTimerOneSecond();

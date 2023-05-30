@@ -15,8 +15,10 @@ namespace WpfKeyboardSimulatorApp.model
         private GameStatus _gameStatus;
         public int Speed { get; set; }
         public int ErrorCount { get; private set; }
-        public bool CaseSensitive { get; set; }
+        ///регистр    
+        public bool CaseSensitive { get; set; } 
         public int TimeSecond { get; set; }
+        /// Класс отвечающий за взаимодействие с текстом  
         public GameText GameText { get; set; }
         private GameTimer _timer;
 
@@ -38,7 +40,9 @@ namespace WpfKeyboardSimulatorApp.model
             TimeSecond++;
         }
 
-
+        /// <summary>
+        /// чистит текст
+        /// </summary>
         public void RemoveCurrentText()
         {
             GameText.ClearCurrentDictionary();
@@ -83,7 +87,10 @@ namespace WpfKeyboardSimulatorApp.model
         {
             return GameText.UserInput;
         }
-
+        /// <summary>
+        /// обновление ввода
+        /// </summary>
+        /// <param name="newInput"></param>
         public void UpdateUserInput(StringBuilder newInput)
         {
             GameText.UpdateUserInput(newInput);
@@ -113,7 +120,12 @@ namespace WpfKeyboardSimulatorApp.model
         {
             CaseSensitive = isSensitive;
         }
-
+        /// <summary>
+        /// остановка тренинга и вызов сообщения
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="textBlockLength"></param>
+        /// <returns></returns>
         public string StopGameAndShowFinishGameMessage(Action action, int textBlockLength)
         {
             _timer.StopTimer();

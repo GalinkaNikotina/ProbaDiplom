@@ -45,13 +45,19 @@ namespace WpfKeyboardSimulatorApp.model
         {
             _dictionary = new List<string>();
         }
-
+        /// <summary>
+        /// загружает предложения определенного уровня
+        /// </summary>
+        /// <param name="level"></param>
         public void LoadDictionaryForLevel(Level level)
         {
             var newDictionary = _repository.FindByLevel(level);
             _dictionary = newDictionary;
         }
-
+        /// <summary>
+        /// обновление ввода
+        /// </summary>
+        /// <param name="input"></param>
         public void UpdateUserInput(StringBuilder input)
         {
             UserInput = input;
