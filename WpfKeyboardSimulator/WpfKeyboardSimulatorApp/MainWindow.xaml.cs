@@ -74,7 +74,7 @@ namespace WpfKeyboardSimulatorApp
                 OemMinus.Content = "_";
                 OemPlus.Content = "+";
             }
-            else
+            else if (_userInput.LetterCase == LetterCase.Lower)
             {
                 Oem3.Content = ",";
                 D1.Content = "1";

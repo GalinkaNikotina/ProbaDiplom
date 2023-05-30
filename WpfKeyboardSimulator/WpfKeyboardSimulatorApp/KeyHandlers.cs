@@ -115,8 +115,17 @@ namespace WpfKeyboardSimulatorApp
             {
                 case Key.LeftShift:
                 {
-                    _userInput.SetUpperCase();
-                    SymbolOnOff();
+                        if (_userInput.LetterCase == LetterCase.Upper)
+                        {
+                            _userInput.SetLowerCase();
+                        }
+                        else if (_userInput.LetterCase == LetterCase.Lower)
+                        {
+                            _userInput.SetUpperCase();
+                        }
+                        //_userInput.SetUpperCase();
+                        //_userInput.SetLowerCase();
+                        SymbolOnOff();
                     return;
                 }
                 case Key.CapsLock:
