@@ -110,7 +110,9 @@ namespace WpfKeyboardSimulatorApp
             StringBuilder userInput = _game.ExtractUserInput();
             KeyUpButton();
             KeyPress(e.Key.ToString());
- 
+
+            ///
+
             switch (e.Key)
             {
                 case Key.LeftShift:
