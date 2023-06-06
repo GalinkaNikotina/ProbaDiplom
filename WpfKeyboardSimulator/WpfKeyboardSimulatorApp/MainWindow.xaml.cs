@@ -64,7 +64,7 @@ namespace WpfKeyboardSimulatorApp
         {
             if (_userInput.LetterCase == LetterCase.Upper)
             {
-                Oem3.Content = "~";
+                Oem3.Content = ",";
                 D1.Content = "!";
                 D2.Content = "@";
                 D3.Content = "#";
@@ -80,7 +80,7 @@ namespace WpfKeyboardSimulatorApp
             }
             else if (_userInput.LetterCase == LetterCase.Lower)
             {
-                Oem3.Content = ",";
+                Oem3.Content = "ё";
                 D1.Content = "1";
                 D2.Content = "2";
                 D3.Content = "3";

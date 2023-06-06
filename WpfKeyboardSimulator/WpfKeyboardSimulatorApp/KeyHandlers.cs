@@ -117,19 +117,39 @@ namespace WpfKeyboardSimulatorApp
             {
                 case Key.LeftShift:
                 {
+                        //KeyBigSmall(e.IsToggled);
+                        //if (_userInput.LetterCase == LetterCase.Upper)
+                        //{
+                        //    _userInput.SetUpperCase();
+                        //}
                         if (_userInput.LetterCase == LetterCase.Upper)
                         {
                             _userInput.SetLowerCase();
                         }
-                        else if (_userInput.LetterCase == LetterCase.Lower)
-                        {
-                            _userInput.SetUpperCase();
-                        }
-                        //_userInput.SetUpperCase();
-                        //_userInput.SetLowerCase();
+                        //else if (_userInput.LetterCase == LetterCase.Lower)
+                        //{
+                        //    _userInput.SetUpperCase();
+                        //}
+                        _userInput.SetUpperCase();
+                        _userInput.SetLowerCase();
                         SymbolOnOff();
                     return;
                 }
+
+                    //переключение символов верхней строки
+                case Key.LeftCtrl:
+                    {
+                        if (_userInput.LetterCase == LetterCase.Upper)
+                        {
+                            _userInput.SetLowerCase();
+                        }
+                        else /*if (_userInput.LetterCase == LetterCase.Lower)*/
+                        {
+                            _userInput.SetUpperCase();
+                        }
+                        SymbolOnOff();
+                        return;
+                    }
                 case Key.CapsLock:
                 {
                     KeyBigSmall(e.IsToggled);
