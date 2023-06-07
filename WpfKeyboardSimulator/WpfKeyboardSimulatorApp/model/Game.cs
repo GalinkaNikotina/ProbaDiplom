@@ -82,6 +82,20 @@ namespace WpfKeyboardSimulatorApp.model
 
             Speed = result;
         }
+        public int GetSpeed(int res)
+        {
+            float minimum = 0f;
+            int result = 0;
+
+            if (TimeSecond / 1000 > 60)
+            {
+                minimum = (float)(TimeSecond / 1000f) / 60f;
+                result = (int)(res / minimum);
+            }
+
+            Speed = result;
+            return result;
+        }
 
         public StringBuilder ExtractUserInput()
         {

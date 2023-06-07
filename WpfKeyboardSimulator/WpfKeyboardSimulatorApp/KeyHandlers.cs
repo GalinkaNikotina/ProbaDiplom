@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfKeyboardSimulatorApp.model;
 using WpfKeyboardSimulatorApp.repository;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfKeyboardSimulatorApp
 {
@@ -24,6 +25,8 @@ namespace WpfKeyboardSimulatorApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int ErrorCount { get; set; }
+
         private void TimerButtonUp_Tick(object sender, EventArgs e)
         {
             KeyUpButton();
@@ -45,9 +48,12 @@ namespace WpfKeyboardSimulatorApp
 
         private void OnButtonStartClick(object sender, RoutedEventArgs e)
         {
-            TextBlockCheck.Text = "";
+            //Text.Clear();
+            TextBlockCheck.Text = " ";
             SpeedLabel.Content = "Скорость 0 симв/мин";
             ErorCountLabel.Content = "Ошибки : 0";
+            ErrorCount = 0;
+            Timer.Start();
             ButtonStop.IsEnabled = true;
             ButtonStart.IsEnabled = false;
 
@@ -116,25 +122,53 @@ namespace WpfKeyboardSimulatorApp
             switch (e.Key)
             {
                 case Key.LeftShift:
-                {
-                        //KeyBigSmall(e.IsToggled);
-                        //if (_userInput.LetterCase == LetterCase.Upper)
-                        //{
-                        //    _userInput.SetUpperCase();
-                        //}
+                    {
+
+                        KeyBigSmall(e.IsToggled);
                         if (_userInput.LetterCase == LetterCase.Upper)
+                        {
+                            _userInput.SetUpperCase();
+                        }
+                        else if (_userInput.LetterCase == LetterCase.Lower)
                         {
                             _userInput.SetLowerCase();
                         }
+
+                        return;
+                        //        KeyBigSmall(e.IsToggled);
+                        //        if (_userInput.LetterCase == LetterCase.Lower)
+                        //        {
+                        //            _userInput.SetUpperCase();
+                        //        }
+                        //        else if (_userInput.LetterCase == LetterCase.Upper)
+                        //        {
+                        //            _userInput.SetLowerCase();
+                        //        }
+                        //            return; 
+
+                        //}
+
+
+                        //if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+                        //KeyBigSmall(e.IsToggled);
+                        //if (_userInput.LetterCase == LetterCase.Upper)
+                        //{
+                        //    _userInput.SetLowerCase();
+                        //}
+
+                        //if (_userInput.LetterCase == LetterCase.Upper)
+                        //{
+                        //    _userInput.SetLowerCase();
+                        //}
                         //else if (_userInput.LetterCase == LetterCase.Lower)
                         //{
                         //    _userInput.SetUpperCase();
                         //}
-                        _userInput.SetUpperCase();
-                        _userInput.SetLowerCase();
-                        SymbolOnOff();
-                    return;
-                }
+                        //_userInput.SetUpperCase();
+                        //_userInput.SetLowerCase();
+                        //SymbolOnOff();
+                        //return;
+                    }
 
                     //переключение символов верхней строки
                 case Key.LeftCtrl:
@@ -210,6 +244,8 @@ namespace WpfKeyboardSimulatorApp
                                         if (button.Name.Equals(e.Key.ToString()))
                                         {
                                             userInput.Append(button.Content);
+                                            
+                                            SpeedLabel.Content = _game.GetSpeed(2);
                                             break;
                                         }
                                     }

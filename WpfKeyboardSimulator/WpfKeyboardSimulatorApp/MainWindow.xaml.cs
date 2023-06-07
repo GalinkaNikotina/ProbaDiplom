@@ -18,12 +18,13 @@ namespace WpfKeyboardSimulatorApp
     {
         public Button tmp { get; set; }
         public Button tmp2 { get; set; }
+       
         public DispatcherTimer TimerButton { get; set; }
-
-
+        public DispatcherTimer Timer { get; set; }
+        public int Speed { get; set; }
         private Game _game;
         private UserInput _userInput;
-
+        public int TimeSecond { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +35,10 @@ namespace WpfKeyboardSimulatorApp
 
             KeyBigSmall(false);
             TurnOffTabIndex();
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            Timer.Tick += Timer_Tick;
 
             TimerButton = new DispatcherTimer();
             TimerButton.Interval = new TimeSpan(5000000);
@@ -49,15 +54,29 @@ namespace WpfKeyboardSimulatorApp
         private void Timer_Tick(object sender, EventArgs e)
         {
             _game.IncreaseTimerOneSecond();
+            TimeSecond += 1;
             CalcSymbols();
         }
 
         private void CalcSymbols()
         {
+            float min = 0;
+
             int res = TextBlockCheck.Text.Length;
-            _game.CalculateResult(res);
-            SpeedLabel.Content = _game.ShowCurrentSpeed();
+
+            if (TimeSecond / 1000 > 60)
+            {
+
+                min = (float)(TimeSecond / 1000f) / 60f;
+                res = (int)(res / min); 
+            }
+            Speed = res;
+            SpeedLabel.Content = "Скорость " + res.ToString() + " симв / мин";
         }
+        //int res = TextBlockCheck.Text.Length;
+        //_game.CalculateResult(res);
+        //SpeedLabel.Content = _game.ShowCurrentSpeed();
+    
 
 
         public void SymbolOnOff()
@@ -66,16 +85,16 @@ namespace WpfKeyboardSimulatorApp
             {
                 Oem3.Content = ",";
                 D1.Content = "!";
-                D2.Content = "@";
-                D3.Content = "#";
-                D4.Content = "$";
-                D5.Content = "%";
-                D6.Content = "^";
-                D7.Content = "&";
-                D8.Content = "*";
-                D9.Content = "(";
-                D0.Content = ")";
-                OemMinus.Content = "_";
+                D2.Content = "?";
+                D3.Content = "@";
+                D4.Content = "#";
+                D5.Content = "$";
+                D6.Content = "%";
+                D7.Content = "^";
+                D8.Content = "&";
+                D9.Content = "*";
+                D0.Content = "(";
+                OemMinus.Content = ")";
                 OemPlus.Content = "+";
             }
             else if (_userInput.LetterCase == LetterCase.Lower)
