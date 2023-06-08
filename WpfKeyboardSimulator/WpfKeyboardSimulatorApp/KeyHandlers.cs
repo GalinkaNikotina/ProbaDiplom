@@ -51,7 +51,7 @@ namespace WpfKeyboardSimulatorApp
             //Text.Clear();
             TextBlockCheck.Text = " ";
             SpeedLabel.Content = "Скорость 0 симв/мин";
-            ErorCountLabel.Content = "Ошибки : 0";
+            ErorCountLabel.Content = "Ошибок : 0";
             ErrorCount = 0;
             Timer.Start();
             ButtonStop.IsEnabled = true;
@@ -291,7 +291,7 @@ namespace WpfKeyboardSimulatorApp
                     }
                 }
 
-                ErorCountLabel.Content = "False : " + _game.ErrorCount;
+                ErorCountLabel.Content = "Ошибок : " + _game.ErrorCount;
             }
         }
 
