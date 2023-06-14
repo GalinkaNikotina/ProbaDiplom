@@ -60,18 +60,7 @@ namespace WpfKeyboardSimulatorApp
 
         private void CalcSymbols()
         {
-            float min = 0;
-
-            int res = TextBlockCheck.Text.Length;
-
-            if (TimeSecond / 1000 > 60)
-            {
-
-                min = (float)(TimeSecond / 1000f) / 60f;
-                res = (int)(res / min); 
-            }
-            Speed = res;
-            SpeedLabel.Content = "Скорость " + res.ToString() + " симв / мин";
+            SpeedLabel.Content = "Скорость " + _game.GetSpeed() + " симв / мин";
         }
         //int res = TextBlockCheck.Text.Length;
         //_game.CalculateResult(res);

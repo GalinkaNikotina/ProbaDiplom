@@ -82,17 +82,13 @@ namespace WpfKeyboardSimulatorApp.model
 
             Speed = result;
         }
-        public int GetSpeed(int res)
+        public int GetSpeed()
         {
-            float minimum = 0f;
+            int rightLettersCount = GameText.UserInput.Length - ErrorCount;
+            float currentTimeInMinutes = (TimeSecond / 1000f) / 60f;
             int result = 0;
-
-            if (TimeSecond / 1000 > 60)
-            {
-                minimum = (float)(TimeSecond / 1000f) / 60f;
-                result = (int)(res / minimum);
-            }
-
+                result = (int)(rightLettersCount / currentTimeInMinutes);
+            Console.WriteLine("Current time: " + currentTimeInMinutes + "current right letters count:" + rightLettersCount);
             Speed = result;
             return result;
         }

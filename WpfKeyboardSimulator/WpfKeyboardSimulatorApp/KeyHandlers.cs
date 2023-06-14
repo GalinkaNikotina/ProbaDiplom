@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using WpfKeyboardSimulatorApp.model;
-using WpfKeyboardSimulatorApp.repository;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfKeyboardSimulatorApp
 {
@@ -116,74 +103,22 @@ namespace WpfKeyboardSimulatorApp
             StringBuilder userInput = _game.ExtractUserInput();
             KeyUpButton();
             KeyPress(e.Key.ToString());
-
-            ///
-
             switch (e.Key)
             {
-                case Key.LeftShift:
-                    {
-
-                        KeyBigSmall(e.IsToggled);
-                        if (_userInput.LetterCase == LetterCase.Upper)
-                        {
-                            _userInput.SetUpperCase();
-                        }
-                        else if (_userInput.LetterCase == LetterCase.Lower)
-                        {
-                            _userInput.SetLowerCase();
-                        }
-
-                        return;
-                        //        KeyBigSmall(e.IsToggled);
-                        //        if (_userInput.LetterCase == LetterCase.Lower)
-                        //        {
-                        //            _userInput.SetUpperCase();
-                        //        }
-                        //        else if (_userInput.LetterCase == LetterCase.Upper)
-                        //        {
-                        //            _userInput.SetLowerCase();
-                        //        }
-                        //            return; 
-
-                        //}
-
-
-                        //if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
-                        //KeyBigSmall(e.IsToggled);
-                        //if (_userInput.LetterCase == LetterCase.Upper)
-                        //{
-                        //    _userInput.SetLowerCase();
-                        //}
-
-                        //if (_userInput.LetterCase == LetterCase.Upper)
-                        //{
-                        //    _userInput.SetLowerCase();
-                        //}
-                        //else if (_userInput.LetterCase == LetterCase.Lower)
-                        //{
-                        //    _userInput.SetUpperCase();
-                        //}
-                        //_userInput.SetUpperCase();
-                        //_userInput.SetLowerCase();
-                        //SymbolOnOff();
-                        //return;
-                    }
-
-                    //переключение символов верхней строки
                 case Key.LeftCtrl:
+                {
+                    if (_userInput.LetterCase == LetterCase.Upper)
                     {
-                        if (_userInput.LetterCase == LetterCase.Upper)
-                        {
-                            _userInput.SetLowerCase();
-                        }
-                        else /*if (_userInput.LetterCase == LetterCase.Lower)*/
-                        {
-                            _userInput.SetUpperCase();
-                        }
-                        SymbolOnOff();
-                        return;
+                        _userInput.SetLowerCase();
                     }
+                    else
+                    {
+                        _userInput.SetUpperCase();
+                    }
+
+                    SymbolOnOff();
+                    return;
+                }
                 case Key.CapsLock:
                 {
                     KeyBigSmall(e.IsToggled);
@@ -239,13 +174,20 @@ namespace WpfKeyboardSimulatorApp
                             {
                                 foreach (var element in item.Children)
                                 {
-                                    if (element is Button button) 
+                                    if (element is Button button)
                                     {
                                         if (button.Name.Equals(e.Key.ToString()))
                                         {
-                                            userInput.Append(button.Content);
-                                            
-                                            SpeedLabel.Content = _game.GetSpeed(2);
+                                            if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift)
+                                            {
+                                                userInput.Append(button.Content.ToString().ToUpper());
+                                            }
+                                            else
+                                            {
+                                                userInput.Append(button.Content);
+                                            }
+
+                                            SpeedLabel.Content = _game.GetSpeed();
                                             break;
                                         }
                                     }
