@@ -60,13 +60,13 @@ namespace WpfKeyboardSimulatorApp
 
         private void CalcSymbols()
         {
-            SpeedLabel.Content = "Скорость " + _game.GetSpeed() + " симв / мин";
+            SpeedLabel.Content = "Скорость " + _game.GetSpeed() + " знач / мин";
         }
         //int res = TextBlockCheck.Text.Length;
         //_game.CalculateResult(res);
         //SpeedLabel.Content = _game.ShowCurrentSpeed();
-    
 
+        //Метод SymbolOnOff устанавливает содержимое нескольких элементов пользовательского интерфейса на основе текущего регистра букв.
 
         public void SymbolOnOff()
         {
@@ -104,7 +104,7 @@ namespace WpfKeyboardSimulatorApp
             }
         }
 
-
+        //Метод FormattingText форматирует текст в элементе пользовательского интерфейса TextBlockRead на основе пользовательского ввода.
         private void FormattingText(int index, string _char, bool error)
         {
             Span result = new Span();
@@ -154,7 +154,9 @@ namespace WpfKeyboardSimulatorApp
             TextBlockRead.Inlines.Add(baseText);
             TextBlockCheck.Inlines.Add(result);
         }
-
+        //Метод перебирает все дочерние элементы
+        //базового объекта Grid, который является элементом управления
+        //Grid, и устанавливает для свойства IsTabStop любых элементов Button значение false.
         public void TurnOffTabIndex()
         {
             foreach (Grid item in BaseGrid.Children)

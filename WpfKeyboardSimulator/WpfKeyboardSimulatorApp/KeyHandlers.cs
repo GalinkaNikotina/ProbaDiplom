@@ -3,6 +3,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Linq;
 using WpfKeyboardSimulatorApp.model;
 
 namespace WpfKeyboardSimulatorApp
@@ -18,12 +19,17 @@ namespace WpfKeyboardSimulatorApp
         {
             KeyUpButton();
         }
-
+        //Этот метод представляет собой обработчик событий, который запускается при установке или снятии флажка.
+        //Метод вызывает метод ChangeCaseSensitive объекта _game, передавая логическое значение, которое указывает, установлен или не установлен флажок
         private void ChangeCaseSensitive(object sender, RoutedEventArgs e)
         {
             _game.ChangeCaseSensitive((bool)CaseSensitive.IsChecked);
         }
-
+        //Этот метод является обработчиком событий, который запускается при срабатывании таймера.Метод вызывает метод KeyUpButton.
+        //Этот метод представляет собой обработчик событий, который запускается при нажатии кнопки. Метод вызывает
+        //метод StopGameAndShowFinishGameMessage объекта _game, передавая два аргумента: CalcSymbols и длину текста в объекте TextBlockCheck.
+        //Затем метод отображает окно сообщения с сообщением о результате, возвращаемым объектом _game. Наконец, метод отключает
+        //кнопку ButtonStop и включает кнопку ButtonStart.
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
             String resultMessage =
@@ -32,12 +38,12 @@ namespace WpfKeyboardSimulatorApp
             ButtonStop.IsEnabled = false;
             ButtonStart.IsEnabled = true;
         }
-
+        //Этот метод представляет собой обработчик событий, который запускается при нажатии кнопки.
         private void OnButtonStartClick(object sender, RoutedEventArgs e)
         {
-            //Text.Clear();
+            
             TextBlockCheck.Text = " ";
-            SpeedLabel.Content = "Скорость 0 симв/мин";
+            SpeedLabel.Content = "Скорость 0 знач/мин";
             ErorCountLabel.Content = "Ошибок : 0";
             ErrorCount = 0;
             Timer.Start();
@@ -47,13 +53,15 @@ namespace WpfKeyboardSimulatorApp
             string newTextGoal = _game.GameRestart();
             TextBlockRead.Text = newTextGoal;
         }
-
+        //Этот метод представляет собой обработчик событий, который запускается при изменении значения ползунка.
         private void ChangeGameDifficulty(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _game.ChangeGameLevel((Level)SliderDifficult.Value);
             DificultLabel.Content = $"Уровень : {_game.DifficultyLevel}";
         }
-
+        //Этот метод вызывается при нажатии клавиши. Метод перебирает дочерние
+        //элементы объекта Grid и проверяет, являются ли какие-либо из них
+        //объектами Button со свойством Name, соответствующим аргументу keyName. 
         public void KeyPress(string keyName)
         {
             foreach (Grid item in BaseGrid.Children)
@@ -83,7 +91,8 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
-
+        //Этот метод перебирает дочерние элементы объекта Grid и устанавливает
+        //для свойства Margin любых объектов Button значение нового объекта Thickness со значением 0.
         public void KeyUpButton()
         {
             foreach (Grid item in BaseGrid.Children)
@@ -97,7 +106,7 @@ namespace WpfKeyboardSimulatorApp
                 }
             }
         }
-
+        //Этот метод представляет собой обработчик событий, который запускается при нажатии клавиши. 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             StringBuilder userInput = _game.ExtractUserInput();
@@ -236,7 +245,7 @@ namespace WpfKeyboardSimulatorApp
                 ErorCountLabel.Content = "Ошибок : " + _game.ErrorCount;
             }
         }
-
+        //этот фрагмент кода определяет методы, которые обрабатывают нажатия клавиш и Caps Lock
         public void KeyBigSmall(bool isSmall)
         {
             foreach (Grid item in BaseGrid.Children)

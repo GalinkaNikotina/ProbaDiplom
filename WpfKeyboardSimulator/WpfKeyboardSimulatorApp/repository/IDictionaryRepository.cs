@@ -5,11 +5,17 @@ using static System.Net.WebRequestMethods;
 
 namespace WpfKeyboardSimulatorApp.repository
 {
+    //Это фрагмент кода для интерфейса и класса, который реализует этот интерфейс
+    //Класс хранилища словарей реализует интерфейс хранилища IDictionary
+    //Метод Find By Level в классе хранилища словарей принимает объект класса Level в качестве аргумента и
+    //возвращает список строк, соответствующих указанному уровню сложности. Метод просматривает список строк
+    //в поле _dictionary, используя объект Level в качестве ключа.
     public interface IDictionaryRepository
     {
         List<String> FindByLevel(Level level);
     }
-
+  
+    //
     class DictionaryRepository : IDictionaryRepository
     {
         private Dictionary<Level, List<string>> _dictionary;
@@ -36,8 +42,8 @@ namespace WpfKeyboardSimulatorApp.repository
             _dictionary[Level.PreIntermediate] = new List<string>();
             _dictionary[Level.PreIntermediate].Add("Жизнь дается один раз, и хочется прожить ее бодро, осмысленно, красиво.");
             _dictionary[Level.PreIntermediate].Add("Он охотно давал их читать, никогда не требуя их назад; зато никогда не возвращал хозяину книги.");
-            _dictionary[Level.PreIntermediate].Add("Канонада ста­ла сла­бее, одна­ко трес­кот­ня ружей сза­ди и спра­ва слы­ша­лась все чаще и чаще.");
-            _dictionary[Level.PreIntermediate].Add("То степь откры­ва­лась далё­кая и мол­ча­ли­вая, то низ­кие, подер­ну­тые кро­вью тучи тону­ли в чер­ном мра­ке.");
+            _dictionary[Level.PreIntermediate].Add("Канонада стала слабее, однако трескотня ружей сзади и справа слышалась все чаще и чаще.");
+            _dictionary[Level.PreIntermediate].Add("То степь открывалась далекая и молчаливая, то низкие, подернутые кровью тучи тонули в черном мраке.");
             _dictionary[Level.PreIntermediate].Add("Время стояло самое благоприятное, то есть было темно, слегка морозно и совершенно тихо.");
             _dictionary[Level.PreIntermediate].Add("До этой поры он не жил, а лишь существовал, правда очень недурно, но все же возлагая все надежды на будущее.");
 
@@ -65,8 +71,8 @@ namespace WpfKeyboardSimulatorApp.repository
            
 
         }
-         
 
+        //Этот метод ищет слова в словаре по заданному уровню сложности и возвращает список найденных слов.
         public List<string> FindByLevel(Level level)
         {
             return _dictionary.GetValueOrDefault(level);

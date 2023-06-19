@@ -19,6 +19,7 @@ namespace WpfKeyboardSimulatorApp.model
         public String GoalText { get; private set; }
         private IDictionaryRepository _repository;
 
+        //инициализирует свойство пользовательского ввода
         public GameText()
         {
             UserInput = new StringBuilder(100);
@@ -36,10 +37,14 @@ namespace WpfKeyboardSimulatorApp.model
             GoalText = textForCurrentLevel[goalTextIndex];
         }
 
+        //Метод перезапуска принимает параметр уровня, называемый level, и инициализирует текст игры с помощью метода Init.
         public void Restart(Level level)
         {
             Init(level);
         }
+
+        //Метод Clear Current Dictionary очищает текущий словарь игрового текста путем создания
+        //нового объекта List<string> и присвоения ему поля _dictionary.
 
         public void ClearCurrentDictionary()
         {

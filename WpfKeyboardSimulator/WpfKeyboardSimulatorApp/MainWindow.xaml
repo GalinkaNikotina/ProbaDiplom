@@ -32,7 +32,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Label  Height="25" Name="SpeedLabel" Content="Скорость: 0 симв/мин"/>
+            <Label  Height="25" Name="SpeedLabel" Content="Скорость: 0 знач/мин"/>
             <Label  Height="25" x:Name="ErorCountLabel" Grid.Column="1" Content="Ошибок: 0"/>
             <Label  Height="25" HorizontalContentAlignment="Left" Grid.Column="2" Name="DificultLabel"  DockPanel.Dock="Left">Уровень: Beginner</Label>
             <Slider  Height="25" TickPlacement="BottomRight" TickFrequency="1"  Grid.Column="3" x:Name="SliderDifficult" ValueChanged="ChangeGameDifficulty" Minimum="0" Value="0" Maximum="5"  VerticalAlignment="Center"></Slider>

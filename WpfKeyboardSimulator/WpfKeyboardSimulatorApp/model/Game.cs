@@ -21,7 +21,7 @@ namespace WpfKeyboardSimulatorApp.model
         /// Класс отвечающий за взаимодействие с текстом  
         public GameText GameText { get; set; }
         private GameTimer _timer;
-
+        //конструктор, который принимает делегат действия в качестве параметра.
         public Game(Action<object, EventArgs> timerTick)
         {
             DifficultyLevel = Level.Beginner;
@@ -34,7 +34,7 @@ namespace WpfKeyboardSimulatorApp.model
             _timer = new GameTimer();
             _timer.InitTimer(timerTick);
         }
-
+        //Метод IncreaseTimerOneSecond увеличивает свойство TimeSecond на единицу.
         public void IncreaseTimerOneSecond()
         {
             TimeSecond++;
@@ -47,7 +47,7 @@ namespace WpfKeyboardSimulatorApp.model
         {
             GameText.ClearCurrentDictionary();
         }
-
+        //Метод UpdateCurrentDictionary обновляет текущий словарь экземпляра GameText на основе параметра level.
         public void UpdateCurrentDictionary(Level level)
         {
             GameText.LoadDictionaryForLevel(level);
@@ -61,14 +61,14 @@ namespace WpfKeyboardSimulatorApp.model
             GameText.Init(DifficultyLevel);
             return true;
         }
-
+        //Метод ChangeGameLevel обновляет текущий словарь экземпляра GameText и свойство DifficultyLevel на основе параметра level.
         public bool ChangeGameLevel(Level level)
         {
             UpdateCurrentDictionary(level);
             DifficultyLevel = level;
             return true;
         }
-
+        //Метод CalculateResult вычисляет скорость пользователя на основе параметра result и времени, затраченного на выполнение задачи.
         public void CalculateResult(int res)
         {
             float minimum = 0f;
@@ -82,17 +82,18 @@ namespace WpfKeyboardSimulatorApp.model
 
             Speed = result;
         }
+        //Этот метод вычисляет скорость набора текста
         public int GetSpeed()
         {
-            int rightLettersCount = GameText.UserInput.Length - ErrorCount;
-            float currentTimeInMinutes = (TimeSecond / 1000f) / 60f;
+            int rightLettersCount = GameText.UserInput.Length - ErrorCount; //содержит количество правильно введенных символов. Она вычисляется как разность между длиной введенного пользователем текста и количеством ошибок.
+            float currentTimeInMinutes = (TimeSecond / 1000f) / 60f; //содержит время, затраченное на набор текста в минутах. Она вычисляется как отношение времени в миллисекундах, затраченного на набор текста, к 60.
             int result = 0;
                 result = (int)(rightLettersCount / currentTimeInMinutes);
             Console.WriteLine("Current time: " + currentTimeInMinutes + "current right letters count:" + rightLettersCount);
             Speed = result;
             return result;
         }
-
+        //Метод ExtractUserInput возвращает свойство userInput экземпляра GameText в виде объекта StringBuilder.
         public StringBuilder ExtractUserInput()
         {
             return GameText.UserInput;
@@ -101,21 +102,25 @@ namespace WpfKeyboardSimulatorApp.model
         /// обновление ввода
         /// </summary>
         /// <param name="newInput"></param>
+       
         public void UpdateUserInput(StringBuilder newInput)
         {
             GameText.UpdateUserInput(newInput);
         }
+        //Метод IncrementError увеличивает свойство errorCount экземпляра игры на единицу.
 
         public void IncrementError()
         {
             ErrorCount++;
         }
-
+        //Метод StopGame устанавливает для свойства _gameStatus экземпляра игры значение GameStatus.
         public void StopGame()
         {
             _gameStatus = GameStatus.Stopped;
         }
-
+        //Метод GameRestart перезапускает игру, обновляя свойство userInput
+        //экземпляра GameText до пустого объекта StringBuilder,
+        //устанавливая для свойства _gameStatus экземпляра игры значение GameStatus
         public string GameRestart()
         {
             GameText.UpdateUserInput(new StringBuilder());
@@ -125,6 +130,8 @@ namespace WpfKeyboardSimulatorApp.model
             GameText.Restart(DifficultyLevel);
             return GameText.GoalText;
         }
+
+        //Метод ChangeCaseSensitive принимает логический параметр isSensitive и обновляет свойство CaseSensitive экземпляра игры до значения параметра.
 
         public void ChangeCaseSensitive(bool isSensitive)
         {
@@ -147,7 +154,7 @@ namespace WpfKeyboardSimulatorApp.model
 
 
             resultMessage.Append(
-                $"Выбран уровень : {DifficultyLevel}\r Результат:\r Скорость набора: {Speed} симв/мин\r");
+                $"Выбран уровень : {DifficultyLevel}\r Результат:\rСкорость набора: {Speed} знач/мин\r");
             resultMessage.Append($"Ошибки: {ErrorCount}\r");
 
             if (GameText.UserInput.Length == 0)
@@ -167,13 +174,13 @@ namespace WpfKeyboardSimulatorApp.model
             return resultMessage.ToString();
         }
 
-
+        //Он возвращает строку, которая представляет текущую скорость пользователя.
         public string ShowCurrentSpeed()
         {
             return new StringBuilder()
                 .Append("Скорость")
                 .Append(Speed)
-                .Append("симв/мин")
+                .Append("знач/мин")
                 .ToString();
         }
     }
